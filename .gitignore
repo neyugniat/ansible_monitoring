@@ -35,3 +35,8 @@ id_rsa*
 # Local override files
 *.local.yml
 local_vars.yml
+
+# Downloaded packages
+roles/*/files/*.tar.gz
+roles/*/files/*.tgz
+roles/*/files/*.deb
