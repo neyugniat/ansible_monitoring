@@ -1,0 +1,21 @@
+---
+- name: Copy Node-exporter tarball
+  ansible.builtin.copy:
+    src: "{{ node_exporter_archive }}"
+    dest: "/tmp/{{ node_exporter_archive }}"
+    mode: "0644"
+
+- name: Extract Node-exporter archive
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ node_exporter_archive }}"
+    dest: /tmp 
+    remote_src: true
+
+- name: Install Node-exporter binaries
+  ansible.builtin.copy:
+    src: "/tmp/{{ node_exporter_extracted_dir }}/node_exporter"
+    dest: "{{ node_exporter_bin_dir }}/node_exporter"
+    owner: root 
+    group: root 
+    mode: "0755"
+    remote_src: true

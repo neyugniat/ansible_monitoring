@@ -1,0 +1,21 @@
+---
+- name: Configure prerequisite all nodes
+  hosts: all
+  become: true
+
+  roles:
+    - common
+
+- name: Configure Control Node
+  hosts: controls
+  become: true
+
+  roles:
+    - prometheus
+
+- name: Configure Targer Nodes
+  hosts: nodes
+  become: true
+
+  roles:
+    - node_exporter

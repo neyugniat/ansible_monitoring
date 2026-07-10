@@ -1,0 +1,16 @@
+---
+prometheus_user: prometheus
+
+prometheus_version: "3.5.4"
+
+prometheus_port: 9090
+node_exporter_port: 9100
+
+prometheus_bin_dir: /usr/local/bin
+prometheus_config_dir: /etc/prometheus
+prometheus_data_dir: /var/lib/prometheus
+prometheus_tmp_dir: /tmp
+
+prometheus_archive: "prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
+prometheus_extract_dir: "{{ prometheus_tmp_dir }}/prometheus-{{ prometheus_version }}.linux-amd64"
+

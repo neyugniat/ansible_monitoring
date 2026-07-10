@@ -1,0 +1,37 @@
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Ansible
+*.retry
+.ansible/
+ansible.log
+
+# Vault - NEVER commit unencrypted vault content
+# (only relevant if you ever keep a decrypted copy locally)
+*.vault
+vault_pass.txt
+.vault_pass
+.vault-pass
+
+# Inventory secrets / host-specific overrides you don't want tracked
+inventories/**/host_vars/*/vault.yml.dec
+*.decrypted
+
+# SSH keys if you ever drop them in-repo by accident
+*.pem
+*.key
+id_rsa*
+
+# Editor/OS cruft
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Local override files
+*.local.yml
+local_vars.yml

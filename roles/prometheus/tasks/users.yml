@@ -1,0 +1,13 @@
+---
+- name: Create prometheus user group
+  ansible.builtin.group:
+    name: "{{ prometheus_user }}"
+    system: true
+
+- name: Create prometheus system user
+  ansible.builtin.user:
+    name: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
