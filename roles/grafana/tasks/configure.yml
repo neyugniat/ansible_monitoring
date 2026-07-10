@@ -1,0 +1,9 @@
+---
+- name: Configure Grafana datasource
+  ansible.builtin.template:
+    src: datasource.yml.j2
+    dest: "{{ grafana_provisioning }}/datasources/prometheus.yml"
+    owner: root
+    group: grafana
+    mode: "0640"
+  notify: Restart Grafana

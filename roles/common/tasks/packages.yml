@@ -1,0 +1,16 @@
+---
+- name: Update apt cache
+  apt:
+    name:
+      - curl
+      - wget
+      - git
+      - unzip
+      - vim
+      - software-properties-common
+      - apt-transport-https
+      - gnupg
+      - ca-certificates
+    state: present
+    update_cache: true
+    cache_valid_time: 86400

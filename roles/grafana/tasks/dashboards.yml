@@ -1,0 +1,26 @@
+---
+- name: Create Node exporter Grafana dashboard
+  ansible.builtin.file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: "0755"
+
+- name: Copy Node exporter dashboard
+  ansible.builtin.copy:
+    src: dashboards/node_exporter_full.json
+    dest: /var/lib/grafana/dashboards/node_exporter_full.json
+    owner: grafana
+    group: grafana
+    mode: "0644"
+  notify: Restart Grafana
+
+- name: Configure dashboard provider
+  ansible.builtin.template:
+    src: dashboards.yml.j2
+    dest: "{{ grafana_provisioning }}/dashboards/default.yml"
+    owner: root
+    group: grafana
+    mode: "0640"
+  notify: Restart Grafana

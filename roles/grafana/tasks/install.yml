@@ -1,0 +1,23 @@
+---
+- name: Add Grafana repository
+  ansible.builtin.deb822_repository:
+    name: grafana
+    types: [deb]
+    uris: "{{ grafana_repo_url }}"
+    suites: "{{ grafana_channel }}"
+    components:
+      - main
+    signed_by: "{{ grafana_gpg_key_url }}"
+    state: present
+  register: grafana_repo
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install Grafana
+  ansible.builtin.apt:
+    name: "{{ grafana_package }}"
+    state: present
+  notify: Restart Grafana

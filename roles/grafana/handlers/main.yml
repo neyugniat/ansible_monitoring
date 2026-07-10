@@ -1,3 +1,5 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# handlers file for roles/grafana
+- name: Restart Grafana
+  ansible.builtin.systemd:
+    name: "{{ grafana_service }}"
+    state: restarted

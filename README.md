@@ -50,7 +50,7 @@ The goal of this project is to build a fully automated monitoring stack without 
                     | Elastic (planned)    |
                     +----------+-----------+
                                |
-                Scrape Metrics  |
+                Scrape Metrics |
                                |
         +----------------------+----------------------+
         |                                             |

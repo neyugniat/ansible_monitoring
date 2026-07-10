@@ -12,6 +12,7 @@
 
   roles:
     - prometheus
+    - grafana
 
 - name: Configure Targer Nodes
   hosts: nodes
