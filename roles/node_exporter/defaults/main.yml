@@ -3,12 +3,15 @@ node_exporter_user: node_exporter
 
 node_exporter_version: "1.11.1"
 
-node_exporter_port: 9100
 node_exporter_web_listen_address: "0.0.0.0:{{ node_exporter_port }}"
 
 node_exporter_bin_dir: /usr/local/bin
+node_exporter_tmp_dir: /tmp
 
 node_exporter_archive: "node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
-node_exporter_extracted_dir: "node_exporter-{{ node_exporter_version }}.linux-amd64"
+node_exporter_extract_dir: "{{ node_exporter_tmp_dir }}/node_exporter-{{ node_exporter_version }}.linux-amd64"
+
+node_exporter_download_url: >-
+  https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/{{ node_exporter_archive }}
 
 node_exporter_extra_flags: []
