@@ -9,7 +9,7 @@ This repository provisions a monitoring lab consisting of:
 
 * **Prometheus** – Metrics collection and storage
 * **Node Exporter** – Host metrics exporter
-* **Grafana** *(planned)* – Visualization and dashboards
+* **Grafana** – Visualization and dashboards
 * **Elastic Stack** *(planned)* – Logs and observability
 
 The goal of this project is to build a fully automated monitoring stack without relying on Docker initially, in order to understand each component's installation and configuration process.
@@ -46,7 +46,7 @@ The goal of this project is to build a fully automated monitoring stack without 
                     |    Control Node      |
                     |----------------------|
                     | Prometheus           |
-                    | Grafana (planned)    |
+                    | Grafana              |
                     | Elastic (planned)    |
                     +----------+-----------+
                                |
@@ -69,13 +69,13 @@ Control machine:
 
 * Ansible
 * SSH access to all managed hosts
-* Passwordless sudo (recommended)
+* Passwordless sudo 
 
 Managed nodes:
 
-* Ubuntu Server
+* Ubuntu Server 24.04
 * Python 3 installed
-* SSH enabled
+* SSH enabled (PubkeyAuthentication)
 
 ---
 
@@ -144,8 +144,8 @@ Shared configuration for every managed node.
 Responsibilities:
 
 * Update APT cache
-* Install common packages
 * Configure common system settings
+* Install prerequisite packages
 
 ---
 
@@ -178,9 +178,16 @@ Responsibilities:
 
 ---
 
-### grafana *(planned)*
+## grafana
 
-Will install Grafana and automatically configure Prometheus as its data source.
+Installs Grafana and automatically provisions:
+
+- Prometheus as the default data source.
+- Dashboard providers.
+- Pre-configured dashboards (Node Exporter Full).
+- Grafana server service (enabled and started).
+
+Once deployed, Grafana is immediately ready to visualize metrics collected by Prometheus without requiring any manual configuration.
 
 ---
 
@@ -199,6 +206,7 @@ Will deploy:
 
 This project emphasizes:
 
+* Learning automation via Ansible
 * Idempotent playbooks
 * Small, reusable roles
 * Consistent variable naming

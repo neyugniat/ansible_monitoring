@@ -5,7 +5,6 @@ grafana_channel: stable
 grafana_gpg_key_url: https://apt.grafana.com/gpg.key
 
 grafana_admin_user: admin
-grafana_admin_password: admin
 
 grafana_package: grafana
 grafana_service: grafana-server

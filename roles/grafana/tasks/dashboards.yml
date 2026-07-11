@@ -9,8 +9,8 @@
 
 - name: Copy Node exporter dashboard
   ansible.builtin.copy:
-    src: dashboards/node_exporter_full.json
-    dest: /var/lib/grafana/dashboards/node_exporter_full.json
+    src: dashboards/
+    dest: /var/lib/grafana/dashboards/
     owner: grafana
     group: grafana
     mode: "0644"

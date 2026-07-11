@@ -1,7 +1,7 @@
 ---
 - name: Configure Grafana datasource
   ansible.builtin.template:
-    src: datasource.yml.j2
+    src: datasources.yml.j2
     dest: "{{ grafana_provisioning }}/datasources/prometheus.yml"
     owner: root
     group: grafana
