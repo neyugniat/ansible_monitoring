@@ -1,0 +1,10 @@
+---
+- name: Template kibana.yml
+  ansible.builtin.template:
+    src: kibana.yml.j2
+    dest: "{{ kibana_config_dir }}/kibana.yml"
+    owner: root
+    group: kibana
+    mode: "0640"
+    backup: true
+  notify: Restart Kibana

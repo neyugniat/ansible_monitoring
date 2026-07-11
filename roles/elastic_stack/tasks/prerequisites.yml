@@ -1,0 +1,8 @@
+---
+- name: Set vm.max_map_count persistently
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: "{{ elastic_vm_max_map_count }}"
+    state: present
+    sysctl_set: true
+    reload: true

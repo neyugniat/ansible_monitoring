@@ -1,3 +1,5 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# tasks file for roles/elastic_stack
+- import_tasks: prerequisites.yml
+- import_tasks: install.yml
+- import_tasks: configure.yml
+- import_tasks: service.yml

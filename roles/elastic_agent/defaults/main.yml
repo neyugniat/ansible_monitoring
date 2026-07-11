@@ -1,3 +1,15 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# defaults file for roles/elastic_agent
+elastic_agent_version: "9.3.2"   
+elastic_agent_flavor: basic
+
+elastic_agent_gpg_key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+
+elastic_agent_apt_uri: "https://artifacts.elastic.co/packages/9.x/apt"
+elastic_agent_apt_suite: stable
+elastic_agent_apt_components: main
+elastic_agent_apt_repo_filename: elastic-9.x
+
+elastic_agent_output_hosts:
+  - "http://{{ hostvars[groups['controls'][0]]['ansible_host'] }}:9200"
+
+elastic_agent_hold_package: true

@@ -1,0 +1,13 @@
+outputs:
+  default:
+    type: elasticsearch
+    hosts: {{ elastic_agent_output_hosts | to_json }}
+
+inputs:
+  - id: journald-system
+    type: journald
+    use_output: default
+    streams:
+      - id: journald-system-stream
+        data_stream:
+          dataset: system.journald

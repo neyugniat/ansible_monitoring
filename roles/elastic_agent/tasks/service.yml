@@ -1,0 +1,7 @@
+---
+- name: Ensure Elastic Agent service is enabled and started
+  ansible.builtin.systemd:
+    name: elastic-agent
+    enabled: true
+    state: started
+    daemon_reload: true

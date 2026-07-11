@@ -1,0 +1,9 @@
+# Managed by Ansible - roles/kibana
+
+server.host: "{{ kibana_host }}"
+server.port: {{ kibana_port }}
+server.name: "{{ inventory_hostname }}"
+
+elasticsearch.hosts: {{ kibana_elasticsearch_hosts | to_json }}
+
+i18n.locale: "en"

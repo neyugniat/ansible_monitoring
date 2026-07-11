@@ -1,0 +1,27 @@
+---
+- name: Ensure jvm.options.d directory exists
+  ansible.builtin.file:
+    path: "{{ elastic_config_dir }}/jvm.options.d"
+    state: directory
+    owner: root
+    group: elasticsearch
+    mode: "0750"
+
+- name: Template JVM heap override
+  ansible.builtin.template:
+    src: heap.options.j2
+    dest: "{{ elastic_config_dir }}/jvm.options.d/heap.options"
+    owner: root
+    group: elasticsearch
+    mode: "0640"
+  notify: Restart Elasticsearch
+
+- name: Template elasticsearch.yml
+  ansible.builtin.template:
+    src: elasticsearch.yml.j2
+    dest: "{{ elastic_config_dir }}/elasticsearch.yml"
+    owner: root
+    group: elasticsearch
+    mode: "0640"
+    backup: true
+  notify: Restart Elasticsearch

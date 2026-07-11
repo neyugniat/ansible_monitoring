@@ -1,0 +1,20 @@
+cluster.name: {{ elastic_cluster_name | default('elasticsearch') }}
+node.name: {{ inventory_hostname }}
+
+path.data: {{ elastic_data_dir }}
+path.logs: {{ elastic_log_dir }}
+
+network.host: {{ elastic_network_host }}
+http.port: {{ elastic_http_port }}
+
+discovery.type: single-node
+
+xpack.security.enabled: {{ elastic_security_enabled | lower }}
+{% if elastic_security_enabled %}
+xpack.security.enrollment.enabled: true
+xpack.security.http.ssl.enabled: true
+xpack.security.transport.ssl.enabled: true
+{% else %}
+xpack.security.http.ssl.enabled: false
+xpack.security.transport.ssl.enabled: false
+{% endif %}

@@ -1,0 +1,14 @@
+---
+kibana_version: "9.3.2" 
+
+kibana_gpg_key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+kibana_keyring_path: /usr/share/keyrings/elasticsearch-keyring.gpg
+
+kibana_apt_uri: "https://artifacts.elastic.co/packages/9.x/apt"
+kibana_apt_suite: stable
+kibana_apt_components: main
+kibana_apt_repo_filename: elastic-9.x
+
+kibana_config_dir: /etc/kibana
+
+kibana_hold_package: true

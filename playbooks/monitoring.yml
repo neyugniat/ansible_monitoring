@@ -13,6 +13,8 @@
   roles:
     - prometheus
     - grafana
+    - elastic_stack
+    - kibana
 
 - name: Configure Targer Nodes
   hosts: nodes
@@ -20,3 +22,4 @@
 
   roles:
     - node_exporter
+    - elastic_agent

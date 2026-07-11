@@ -1,2 +1,21 @@
 ---
 elastic_version: "9.3.2"
+
+elastic_gpg_key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+elastic_keyring_path: /usr/share/keyrings/elasticsearch-keyring.gpg
+
+elastic_apt_uri: "https://artifacts.elastic.co/packages/9.x/apt"
+elastic_apt_suite: stable
+elastic_apt_components: main
+elastic_apt_repo_filename: elastic-9.x
+
+elastic_config_dir: /etc/elasticsearch
+elastic_data_dir: /var/lib/elasticsearch
+elastic_log_dir: /var/log/elasticsearch
+
+elastic_vm_max_map_count: 1048576
+elastic_heap_size: "1g"  
+
+elastic_security_enabled: false
+
+elastic_hold_package: true

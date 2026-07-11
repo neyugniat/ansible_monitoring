@@ -1,0 +1,56 @@
+---
+- name: Check installed elastic-agent version
+  ansible.builtin.command: dpkg-query -W -f='${Version}' elastic-agent
+  register: elastic_agent_installed
+  changed_when: false
+  failed_when: false
+
+- name: Install Elastic Agent (skip if already at pinned version)
+  when: elastic_agent_installed.stdout is not defined or elastic_agent_version not in elastic_agent_installed.stdout
+  block:
+
+    - name: Add Elastic 9.x APT repository
+      ansible.builtin.deb822_repository:
+        name: "{{ elastic_agent_apt_repo_filename }}"
+        types: deb
+        uris: "{{ elastic_agent_apt_uri }}"
+        suites: "{{ elastic_agent_apt_suite }}"
+        components: "{{ elastic_agent_apt_components }}"
+        signed_by: "{{ elastic_agent_gpg_key_url }}"
+        state: present
+      register: elastic_agent_apt_repo_result
+
+    - name: Update apt cache after adding Elastic repo
+      ansible.builtin.apt:
+        update_cache: true
+      when: elastic_agent_apt_repo_result.changed
+
+    - name: Find exact apt candidate matching pinned version
+      ansible.builtin.shell: >-
+        apt-cache madison elastic-agent
+        | awk '{print $3}'
+        | grep -E "^{{ elastic_agent_version }}(-|$)"
+        | head -n1
+      register: elastic_agent_apt_candidate
+      changed_when: false
+
+    - name: Fail if pinned version is not available in the repo
+      ansible.builtin.fail:
+        msg: >-
+          elastic-agent {{ elastic_agent_version }} was not found via apt-cache madison.
+          Confirm it matches elastic_version / kibana_version exactly.
+      when: elastic_agent_apt_candidate.stdout | length == 0
+
+    - name: Install Elastic Agent at pinned version
+      ansible.builtin.apt:
+        name: "elastic-agent={{ elastic_agent_apt_candidate.stdout }}"
+        state: present
+      environment:
+        ELASTIC_AGENT_FLAVOR: "{{ elastic_agent_flavor }}"
+      notify: Restart Elastic Agent
+
+    - name: Hold elastic-agent package at pinned version
+      ansible.builtin.dpkg_selections:
+        name: elastic-agent
+        selection: hold
+      when: elastic_agent_hold_package

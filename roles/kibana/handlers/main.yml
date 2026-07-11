@@ -3,7 +3,7 @@
   ansible.builtin.systemd:
     daemon_reload: true
 
-- name: Restart Elastic Agent
+- name: Restart Kibana
   ansible.builtin.service:
-    name: elastic-agent
+    name: kibana
     state: restarted

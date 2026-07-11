@@ -1,0 +1,60 @@
+---
+- name: Check installed elasticsearch version
+  ansible.builtin.command: dpkg-query -W -f='${Version}' elasticsearch
+  register: elastic_installed
+  changed_when: false
+  failed_when: false
+
+- name: Install Elasticsearch (skip if already at pinned version)
+  when: elastic_installed.stdout is not defined or elastic_version not in elastic_installed.stdout
+  block:
+
+    - name: Remove legacy elastic-9.x.list if present
+      ansible.builtin.file:
+        path: /etc/apt/sources.list.d/elastic-9.x.list
+        state: absent
+
+    - name: Add Elastic 9.x APT repository
+      ansible.builtin.deb822_repository:
+        name: "{{ elastic_apt_repo_filename }}"
+        types: deb
+        uris: "{{ elastic_apt_uri }}"
+        suites: "{{ elastic_apt_suite }}"
+        components: "{{ elastic_apt_components }}"
+        signed_by: "{{ elastic_gpg_key_url }}"
+        state: present
+      register: elastic_apt_repo_result
+
+    - name: Update apt cache after adding Elastic repo
+      ansible.builtin.apt:
+        update_cache: true
+      when: elastic_apt_repo_result.changed
+
+    - name: Find exact apt candidate matching pinned version
+      ansible.builtin.shell: >-
+        apt-cache madison elasticsearch
+        | awk '{print $3}'
+        | grep -E "^{{ elastic_version }}(-|$)"
+        | head -n1
+      register: elastic_apt_candidate
+      changed_when: false
+
+    - name: Fail if pinned version is not available in the repo
+      ansible.builtin.fail:
+        msg: >-
+          elasticsearch {{ elastic_version }} was not found via apt-cache madison.
+          Check that elastic_version matches a version actually published to the
+          9.x apt repo (apt-cache madison elasticsearch on the target host).
+      when: elastic_apt_candidate.stdout | length == 0
+
+    - name: Install Elasticsearch at pinned version
+      ansible.builtin.apt:
+        name: "elasticsearch={{ elastic_apt_candidate.stdout }}"
+        state: present
+      notify: Restart Elasticsearch
+
+    - name: Hold elasticsearch package at pinned version
+      ansible.builtin.dpkg_selections:
+        name: elasticsearch
+        selection: hold
+      when: elastic_hold_package

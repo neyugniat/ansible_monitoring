@@ -14,3 +14,11 @@
     state: present
     update_cache: true
     cache_valid_time: 86400
+
+- name: Set needrestart to non-interactive mode
+  ansible.builtin.copy:
+    dest: /etc/needrestart/needrestart.conf
+    content: |
+      $nrconf{restart} = 'a';
+    owner: root
+    mode: "0644"
