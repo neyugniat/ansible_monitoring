@@ -166,6 +166,23 @@ Responsibilities:
 
 ---
 
+### alertmanager
+
+Install and configures Alertmanager
+
+Responsibilities:
+
+* Create alertmanager user
+* Download Alertmanager
+* Install binaries
+* Deploy configuration
+* Congifure systemd
+* Enable and start the service
+* Deploy a few test rules (which was inspired from the link beneath)
+https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/
+
+---
+
 ### node_exporter
 
 Installs and configures Prometheus Node Exporter.
