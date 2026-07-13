@@ -8,6 +8,7 @@ A lightweight Infrastructure-as-Code (IaC) project for deploying and managing a 
 This repository provisions a monitoring lab consisting of:
 
 * **Prometheus** – Metrics collection and storage
+* **Alertmanager** – Alert routing and notification management
 * **Node Exporter** – Host metrics exporter
 * **Grafana** – Visualization and dashboards
 * **Elastic Stack** *(planned)* – Logs and observability
@@ -30,7 +31,7 @@ The goal of this project is to build a fully automated monitoring stack without 
 │   └── monitoring.yml
 ├── roles
 │   ├── common
-│   ├── prometheus
+│   ├── prometheusA
 │   ├── node_exporter
 │   ├── grafana
 │   └── elastic_stack
@@ -111,6 +112,7 @@ Example:
 ansible_user: ansible
 
 prometheus_port: 9090
+alertmanager_port: 9093
 node_exporter_port: 9100
 grafana_port: 3000
 ```
