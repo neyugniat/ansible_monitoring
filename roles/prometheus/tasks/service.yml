@@ -1,8 +1,8 @@
 ---
-- name: Deploy Premetheus systemd service
+- name: Deploy Prometheus systemd service
   ansible.builtin.template:
     src: prometheus.service.j2
-    dest: /etc/systemd/system/prometheus.service
+    dest: "{{ prometheus_service_dir }}/prometheus.service"
     owner: root
     group: root
     mode: "0644"

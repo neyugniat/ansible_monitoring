@@ -1,0 +1,9 @@
+---
+- name: Copy test alert rule
+  ansible.builtin.template:
+    src: alert_rules.yml.j2
+    dest: "{{ prometheus_config_dir }}/alert_rules.yml"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_user }}"
+    mode: "0644"
+  notify: Restart Prometheus

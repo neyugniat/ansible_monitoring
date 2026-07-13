@@ -15,6 +15,7 @@
     - grafana
     - elastic_stack
     - kibana
+    - alert_manager
 
 - name: Configure Targer Nodes
   hosts: nodes

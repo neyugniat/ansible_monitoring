@@ -6,6 +6,7 @@ prometheus_version: "3.5.4"
 prometheus_bin_dir: /usr/local/bin
 prometheus_config_dir: /etc/prometheus
 prometheus_data_dir: /var/lib/prometheus
+prometheus_service_dir: /etc/systemd/system
 prometheus_tmp_dir: /tmp
 
 prometheus_archive: "prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"

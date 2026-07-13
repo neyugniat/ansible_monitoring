@@ -1,0 +1,42 @@
+---
+- name: Check if Alertmanager is installed
+  ansible.builtin.stat:
+    path: "{{ alertmanager_bin_dir }}/alertmanager"
+  register: alertmanager_binary
+
+- name: Install Alertmanager
+  when: not alertmanager_binary.stat.exists
+  block:
+
+    - name: Download Alertmanager
+      ansible.builtin.get_url:
+        url: "{{ alertmanager_download_url }}"
+        dest: "{{ alertmanager_tmp_dir }}/{{ alertmanager_archive }}"
+
+    - name: Extract Alertmanager archive
+      ansible.builtin.unarchive:
+        src: "{{ alertmanager_tmp_dir }}/{{ alertmanager_archive }}"
+        dest: "{{ alertmanager_tmp_dir }}"
+        remote_src: true
+
+    - name: Install Alertmanager binaries
+      ansible.builtin.copy:
+        src: "{{ alertmanager_extract_dir }}/{{ item }}"
+        dest: "{{ alertmanager_bin_dir }}/{{ item }}"
+        owner: root
+        group: root
+        mode: "0755"
+        remote_src: true
+      loop:
+        - alertmanager
+        - amtool
+
+    - name: Remove download archive
+      ansible.builtin.file:
+        path: "{{ alertmanager_tmp_dir }}/{{ alertmanager_archive }}"
+        state: absent
+
+    - name: Remove etracted files
+      ansible.builtin.file:
+        path: "{{ alertmanager_extract_dir }}"
+        state: absent

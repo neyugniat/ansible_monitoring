@@ -1,0 +1,16 @@
+---
+alertmanager_user: alertmanager
+
+alertmanager_version: "0.33.1"
+
+alertmanager_bin_dir: /usr/local/bin
+alertmanager_config_dir: /etc/alertmanager
+alertmanager_data_dir: /var/lib/alertmanager
+alertmanager_service_dir: /etc/systemd/system
+alertmanager_tmp_dir: /tmp
+
+alertmanager_archive: "alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+alertmanager_extract_dir: "{{ alertmanager_tmp_dir }}/alertmanager-{{ alertmanager_version }}.linux-amd64"
+
+alertmanager_download_url: >-
+  https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/{{ alertmanager_archive }}

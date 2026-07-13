@@ -1,6 +1,7 @@
 ansible_user: ansible
 
 prometheus_port: 9090
+alertmanager_port: 9093
 node_exporter_port: 9100
 grafana_port: 3000
 elastic_http_port: 9200
