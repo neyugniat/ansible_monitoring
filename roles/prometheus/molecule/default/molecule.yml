@@ -1,0 +1,23 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+
+platforms:
+  - name: prometheus-test
+    image: geerlingguy/docker-ubuntu2404-ansible:latest
+
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: "../../../"
+  inventory:
+    group_vars:
+      all:
+        prometheus_port: 9090
+        alertmanager_port: 9093
+        node_exporter_port: 9100
+
+verifier:
+  name: ansible

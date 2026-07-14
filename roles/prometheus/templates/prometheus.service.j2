@@ -17,5 +17,10 @@ ExecStart={{ prometheus_bin_dir }}/prometheus \
 Restart=on-failure
 RestartSec=5  
 
+NoNewPrivileges=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths={{ prometheus_data_dir }}
+
 [Install]
 WantedBy=multi-user.target

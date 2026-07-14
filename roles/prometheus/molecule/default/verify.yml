@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts: molecule
+  become: true
+  tasks:
+    - name: Check prometheus binary exists
+      ansible.builtin.stat:
+        path: /usr/local/bin/prometheus
+      register: binary
+      failed_when: not binary.stat.exists
+
+    - name: Check service is active
+      ansible.builtin.command: systemctl is-active prometheus
+      register: svc
+      changed_when: false
+      failed_when: svc.stdout != "active"
+
+    - name: Check metrics endpoint responds
+      ansible.builtin.uri:
+        url: "http://localhost:9090/-/healthy"
+        status_code: 200
+      retries: 5
+      delay: 3
+      register: health
+      until: health.status == 200

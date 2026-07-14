@@ -1,0 +1,15 @@
+---
+- name: Fail if molecule group is missing
+  hosts: localhost
+  tasks:
+    - name: Assert group existence
+      ansible.builtin.assert:
+        that: "'molecule' in groups"
+
+- name: Converge
+  hosts: molecule
+  become: true
+  tasks:
+    - name: Apply role under test
+      ansible.builtin.include_role:
+        name: prometheus
