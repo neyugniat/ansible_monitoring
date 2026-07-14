@@ -9,6 +9,7 @@
       - main
     signed_by: "{{ grafana_gpg_key_url }}"
     state: present
+    install_python_debian: true
   register: grafana_repo
 
 - name: Update apt cache
