@@ -1,0 +1,13 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Verify node_exporter service is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services["node_exporter.service"].state == "running"

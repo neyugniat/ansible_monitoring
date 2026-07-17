@@ -1,0 +1,5 @@
+---
+- name: Ensure docker group exists
+  ansible.builtin.group:
+    name: "{{ docker_group }}"
+    state: present

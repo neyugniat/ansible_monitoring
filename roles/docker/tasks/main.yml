@@ -1,3 +1,4 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# tasks file for roles/docker
+- import_tasks: users.yml
+- import_tasks: install.yml
+- import_tasks: configure.yml

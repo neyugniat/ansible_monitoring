@@ -1,0 +1,19 @@
+---
+- name: Ensure app directory exists
+  ansible.builtin.file:
+    path: "{{ docker_apps_dir }}"
+    state: directory
+    mode: "0750"
+
+- name: Deploy docker-compose.yml for demo site
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_apps_dir }}/docker-compose.yml"
+    mode: "0640"
+  register: demo_compose_file
+
+- name: Start demo site stack
+  community.docker.docker_compose_v2:
+    project_src: "{{ docker_apps_dir }}"
+    state: present
+    pull: policy

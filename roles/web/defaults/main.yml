@@ -1,0 +1,17 @@
+---
+docker_apps_dir: /opt/docker_apps/demo_site
+
+demo_site_network: demo_net
+
+demo_mysql_image: "mysql:8.4"
+demo_mysql_container_name: demo_mysql
+demo_mysql_root_password: "password"     
+demo_mysql_database: demo_wp
+demo_mysql_user: wp_user
+demo_mysql_password: "password"
+demo_mysql_volume: demo_mysql_data
+
+demo_wp_image: "wordpress:6.6-php8.3-apache"
+demo_wp_container_name: demo_wordpress
+demo_wp_host_port: 8080
+demo_wp_volume: demo_wp_data

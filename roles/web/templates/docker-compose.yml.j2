@@ -1,0 +1,40 @@
+services:
+  mysql:
+    image: "{{ demo_mysql_image }}"
+    container_name: "{{ demo_mysql_container_name }}"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ demo_mysql_root_password }}"
+      MYSQL_DATABASE: "{{ demo_mysql_database }}"
+      MYSQL_USER: "{{ demo_mysql_user }}"
+      MYSQL_PASSWORD: "{{ demo_mysql_password }}"
+    volumes:
+      - "{{ demo_mysql_volume }}:/var/lib/mysql"
+    networks:
+      - "{{ demo_site_network }}"
+
+  wordpress:
+    image: "{{ demo_wp_image }}"
+    container_name: "{{ demo_wp_container_name }}"
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: "mysql:3306"
+      WORDPRESS_DB_NAME: "{{ demo_mysql_database }}"
+      WORDPRESS_DB_USER: "{{ demo_mysql_user }}"
+      WORDPRESS_DB_PASSWORD: "{{ demo_mysql_password }}"
+    ports:
+      - "{{ demo_wp_host_port }}:80"
+    volumes:
+      - "{{ demo_wp_volume }}:/var/www/html"
+    networks:
+      - "{{ demo_site_network }}"
+
+volumes:
+  "{{ demo_mysql_volume }}":
+  "{{ demo_wp_volume }}":
+
+networks:
+  "{{ demo_site_network }}":
+    driver: bridge
