@@ -11,7 +11,7 @@ This repository provisions a monitoring lab consisting of:
 * **Alertmanager** – Alert routing and notification management
 * **Node Exporter** – Host metrics exporter
 * **Grafana** – Visualization and dashboards
-* **Elastic Stack** *(planned)* – Logs and observability
+* **Elastic Stack** – Logs and observability
 
 The goal of this project is to build a fully automated monitoring stack without relying on Docker initially, in order to understand each component's installation and configuration process.
 
@@ -21,7 +21,6 @@ The goal of this project is to build a fully automated monitoring stack without 
 
 ```text
 .
-├── ansible.cfg
 ├── inventories
 │   └── dev
 │       ├── group_vars
@@ -30,12 +29,19 @@ The goal of this project is to build a fully automated monitoring stack without 
 ├── playbooks
 │   └── monitoring.yml
 ├── roles
+│   ├── alert_manager
 │   ├── common
-│   ├── prometheusA
-│   ├── node_exporter
+│   ├── docker
+│   ├── elastic_agent
+│   ├── elastic_stack
 │   ├── grafana
-│   └── elastic_stack
-└── README.md
+│   ├── kibana
+│   ├── node_exporter
+│   ├── prometheus
+│   └── web
+├── ansible.cfg
+├── README.md
+└── requirements.txt
 ```
 
 ---
@@ -48,7 +54,7 @@ The goal of this project is to build a fully automated monitoring stack without 
                     |----------------------|
                     | Prometheus           |
                     | Grafana              |
-                    | Elastic (planned)    |
+                    | Elastic              |
                     +----------+-----------+
                                |
                 Scrape Metrics |

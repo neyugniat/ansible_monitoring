@@ -11,3 +11,5 @@ kibana_port: 5601
 kibana_host: "0.0.0.0"
 kibana_elasticsearch_hosts:
   - "http://localhost:9200"
+
+wp_password: "XzZcul$%u6tyw5^4rE"
