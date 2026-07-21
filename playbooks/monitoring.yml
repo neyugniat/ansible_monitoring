@@ -4,26 +4,56 @@
   become: true
 
   roles:
-    - common
+    - role: common
+      tags:
+        - common
 
 - name: Configure Control Node
   hosts: controls
   become: true
 
   roles:
-    - prometheus
-    - grafana
-    - elastic_stack
-    - kibana
-    - alert_manager
+    - role: prometheus
+      tags:
+        - prometheus
 
-- name: Configure Targer Nodes
+    - role: grafana
+      tags:
+        - grafana
+
+    - role: elastic_stack
+      tags:
+        - elastic_stack
+
+    - role: kibana
+      tags:
+        - kibana
+
+    - role: alert_manager
+      tags:
+        - alert_manager
+
+- name: Configure Target Nodes
   hosts: nodes
   become: true
 
   roles:
-    - node_exporter
-    - elastic_agent
-    - docker
-    - cadvisor
-    - web
+    - role: node_exporter
+      tags:
+        - node_exporter
+
+    - role: elastic_agent
+      tags:
+        - elastic_agent
+
+    - role: docker
+      tags:
+        - docker
+
+    - role: cadvisor
+      tags:
+        - cadvisor
+
+    - role: web
+      tags:
+        - web

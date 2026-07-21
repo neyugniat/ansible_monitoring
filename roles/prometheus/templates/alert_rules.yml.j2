@@ -1,6 +1,17 @@
 groups:
   - name: node-health
     rules:
+      {# - alert: TestAlert
+        expr: vector(1)
+        for: 30s
+
+        labels:
+          severity: info
+
+        annotations:
+          summary: "Testing Alertmanager"
+          description: "This alert should always fire" #}
+
       - alert: InstanceDown
         expr: up{job="node_exporter"} == 0
         for: 1m
