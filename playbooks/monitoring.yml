@@ -25,4 +25,5 @@
     - node_exporter
     - elastic_agent
     - docker
+    - cadvisor
     - web

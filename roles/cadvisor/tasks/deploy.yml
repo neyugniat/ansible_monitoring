@@ -1,0 +1,19 @@
+---
+- name: Pull and run cAdvisor container
+  community.docker.docker_container:
+    name: "{{ cadvisor_container_name }}"
+    image: "{{ cadvisor_image }}:{{ cadvisor_version }}"
+    state: started
+    restart_policy: "{{ cadvisor_restart_policy }}"
+    privileged: true
+    pull: true
+    published_ports:
+      - "{{ cadvisor_port }}:8080"
+    devices:
+      - /dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro

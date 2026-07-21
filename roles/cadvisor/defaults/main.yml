@@ -1,0 +1,5 @@
+---
+cadvisor_image: "ghcr.io/google/cadvisor"
+cadvisor_version: "v0.60.5"
+cadvisor_container_name: cadvisor
+cadvisor_restart_policy: unless-stopped

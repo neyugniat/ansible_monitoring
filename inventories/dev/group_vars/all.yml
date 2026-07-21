@@ -5,9 +5,10 @@ alertmanager_port: 9093
 node_exporter_port: 9100
 grafana_port: 3000
 elastic_http_port: 9200
-elastic_network_host: "0.0.0.0"
-
+cadvisor_port: 8081
 kibana_port: 5601
+
+elastic_network_host: "0.0.0.0"
 kibana_host: "0.0.0.0"
 kibana_elasticsearch_hosts:
   - "http://localhost:9200"

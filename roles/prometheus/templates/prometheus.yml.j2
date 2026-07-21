@@ -21,6 +21,13 @@ scrape_configs:
       - targets:
           - "localhost:{{ alertmanager_port }}"        
 
+  - job_name: cadvisor
+    static_configs:
+      - targets:
+        {% for host in groups.get('nodes', []) if host %}
+          - "{{ hostvars[host].ansible_host }}:{{ cadvisor_port }}"
+        {% endfor %}
+
 
   - job_name: node_exporter
     static_configs:
