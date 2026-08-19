@@ -29,9 +29,17 @@
       tags:
         - kibana
 
+    - role: docker
+      tags:
+        - docker
+
     - role: alert_manager
       tags:
         - alert_manager
+
+    - role: alert_bridge
+      tags:
+        - alert_bridge
 
 - name: Configure Target Nodes
   hosts: nodes

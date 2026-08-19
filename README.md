@@ -11,9 +11,11 @@ This repository provisions a monitoring lab consisting of:
 * **Alertmanager** – Alert routing and notification management
 * **Node Exporter** – Host metrics exporter
 * **Grafana** – Visualization and dashboards
+* **Cadvisor** – Monitoring containers
+* **Alert Bridge** – Distribute alerts
 * **Elastic Stack** – Logs and observability
 
-The goal of this project is to build a fully automated monitoring stack without relying on Docker initially, in order to understand each component's installation and configuration process.
+The goal of this project is to build a fully automated monitoring stack, in order to understand each component's installation and configuration process.
 
 ---
 
@@ -29,7 +31,9 @@ The goal of this project is to build a fully automated monitoring stack without 
 ├── playbooks
 │   └── monitoring.yml
 ├── roles
+│   ├── alert_bridge
 │   ├── alert_manager
+│   ├── cadvisor
 │   ├── common
 │   ├── docker
 │   ├── elastic_agent
@@ -119,6 +123,7 @@ ansible_user: ansible
 
 prometheus_port: 9090
 alertmanager_port: 9093
+alertbridge_port: 9999
 node_exporter_port: 9100
 grafana_port: 3000
 ```
@@ -172,7 +177,7 @@ Responsibilities:
 
 ---
 
-### alertmanager
+### alert_manager
 
 Install and configures Alertmanager
 
@@ -186,6 +191,25 @@ Responsibilities:
 * Enable and start the service
 * Deploy a few test rules (which was inspired from the link beneath)
 https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/
+
+---
+
+### alert_bridge
+
+Deploys and configures the Alert Bridge service
+
+Responsibilities:
+
+* Create the Alert Bridge application directory
+* Deploy the Alert Bridge configuration
+* Deploy environment variables and secrets
+* Pull or build the Alert Bridge container image
+* Configure Docker Compose
+* Deploy and configure Nginx as a reverse proxy
+* Configure networking between Alertmanager, Alert Bridge, and Nginx
+* Enable and start the Alert Bridge service
+* Ensure the service restarts automatically on failure
+* Provide notification routing from Alertmanager to external services such as Telegram and Discord
 
 ---
 
@@ -216,7 +240,7 @@ Once deployed, Grafana is immediately ready to visualize metrics collected by Pr
 
 ---
 
-### elastic_stack *(planned)*
+### elastic_stack
 
 Will deploy:
 

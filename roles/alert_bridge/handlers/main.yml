@@ -1,0 +1,5 @@
+---
+- name: Restart alert_bridge
+  community.docker.docker_compose_v2:
+    project_src: "{{ alert_bridge_repo_dir }}"
+    state: restarted

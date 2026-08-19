@@ -1,0 +1,7 @@
+---
+alert_bridge_repo_dir: /opt/alert_bridge
+alert_bridge_git_repo: "https://github.com/neyugniat/alert_bridge.git"
+alert_bridge_version: main
+alert_bridge_port: 9999
+
+alert_bridge_discord_webhook_url: ""

@@ -1,0 +1,43 @@
+---
+- name: Trust alert_bridge repo directory for git
+  community.general.git_config:
+    name: safe.directory
+    value: "{{ alert_bridge_repo_dir }}"
+    scope: global
+  become: true
+  become_user: "{{ ansible_user }}"
+
+- name: Clone/update alert_bridge repo
+  git:
+    repo: "{{ alert_bridge_git_repo }}"
+    dest: "{{ alert_bridge_repo_dir }}"
+    version: "{{ alert_bridge_version }}"
+    force: true
+  notify: Restart alert_bridge
+
+- name: Template .env file
+  template:
+    src: env.j2
+    dest: "{{ alert_bridge_repo_dir }}/.env"
+    mode: "0600"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  notify: Restart alert_bridge
+
+- name: Verify Telegram token was loaded
+  assert:
+    that: alert_bridge_telegram_bot_token | length > 0
+    fail_msg: "TELEGRAM_BOT_TOKEN is empty — check vault variable naming"
+  no_log: true
+
+- name: Template routing.yml
+  template:
+    src: routing.yml.j2
+    dest: "{{ alert_bridge_repo_dir }}/config/routing.yml"
+  notify: Restart alert_bridge
+
+- name: Build and start alert_bridge
+  community.docker.docker_compose_v2:
+    project_src: "{{ alert_bridge_repo_dir }}"
+    build: always
+    state: present

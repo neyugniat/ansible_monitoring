@@ -3,15 +3,27 @@ global:
   resolve_timeout: 5m
 
 route:
-  receiver: webhook
+  receiver: alert-bridge
   group_by:
     - alertname
   group_wait: 5s
   group_interval: 10s
   repeat_interval: 30s
+  
+  routes:
+    - match:
+        severity: critical
+      group_wait: 10s
+      repeat_interval: 1h
+      continue: true
+
+    - match:
+        severity: warning
+      group_wait: 1m
+      continue: true
 
 receivers:
-  - name: webhook
+  - name: alert-bridge
     webhook_configs:
-      - url: http://192.168.122.1:5000/alert
+      - url: http://control.neyugniat.local:9999/api/webhook
         send_resolved: true
